@@ -27,6 +27,8 @@ public class Program
             return resource;
 
         var str = Console.ReadLine();
-        return str.Split(' ');
+        var args = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return args.Length == 3 ? args : throw new ArgumentException("Expression must contain 2 values and 1 operation");
     }
 }
