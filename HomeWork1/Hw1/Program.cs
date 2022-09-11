@@ -1,5 +1,4 @@
 ﻿using Hw1;
-using System.Text.RegularExpressions;
 
 public class Program
 {
@@ -28,6 +27,6 @@ public class Program
             return resource;
 
         var str = Console.ReadLine();
-        return Regex.Split(str, @"([*()\^\/]|[\+\-])");
+        return str.Split(' ');
     }
 }
