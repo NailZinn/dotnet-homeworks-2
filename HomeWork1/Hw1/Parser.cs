@@ -7,19 +7,30 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        if (!IsArgLengthSupported(args))
-            throw new ArgumentException();
+        val1 = 0;
+        val2 = 0;
+        operation = CalculatorOperation.Undefined;
 
-        val1 = ParseValue(args[0]);
-        operation = ParseOperation(args[1]);
-        val2 = ParseValue(args[2]);
+        AssertLength(args);
+
+        try
+        {
+            val1 = double.Parse(args[0]);
+            operation = ParseOperation(args[1]);
+            val2 = double.Parse(args[2]);
+        }
+        catch (FormatException)
+        {
+            throw new ArgumentException("Could not convert given value to a number");
+        }
     }
 
-    private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
-
-    private static double ParseValue(string arg)
+    private static void AssertLength(string[] args)
     {
-        return double.TryParse(arg, out double val) ? val : throw new ArgumentException();
+        if (args == null)
+            throw new ArgumentNullException(nameof(args));
+        if (args.Length != 3)
+            throw new ArgumentException("Expression must contain 2 values and 1 operation");
     }
 
     private static CalculatorOperation ParseOperation(string arg)
@@ -30,7 +41,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "*" => CalculatorOperation.Multiply,
             "/" => CalculatorOperation.Divide,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException("Could not convert given value to an operation")
         };
     }
 }
