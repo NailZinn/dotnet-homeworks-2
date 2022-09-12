@@ -10,6 +10,21 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+<<<<<<< HEAD
+    - uses: actions/checkout@v3
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build in Debug mode
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --filter FullyQualifiedName!~Hw13Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings .github/coverlet.runsettings
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.0
+=======
       - uses: actions/checkout@v3
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
@@ -23,6 +38,7 @@ jobs:
         run: dotnet test --filter FullyQualifiedName!~Hw13Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings .github/coverlet.runsettings
       - name: Codecov
         uses: codecov/codecov-action@v3.1.0
+>>>>>>> 8b1cca9467434cc15a86309e22bdc83d14799cd8
 
   test:
     runs-on: ubuntu-latest
