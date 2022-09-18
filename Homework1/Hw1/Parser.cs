@@ -26,9 +26,7 @@ public static class Parser
     }
 
     private static void AssertLength(string[] args)
-    {
-        if (args == null)
-            throw new ArgumentNullException(nameof(args));
+    { 
         if (args.Length != 3)
             throw new ArgumentException("Expression must contain 2 values and 1 operation");
     }
