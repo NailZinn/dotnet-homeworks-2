@@ -66,16 +66,6 @@
      
      .method private static void AssertLength(string[] args) cil managed
      {
-        // null check
-        ldarg.0
-        brtrue.s CheckLength
-        
-        ldstr "args"
-        newobj instance void [System.Runtime]System.ArgumentNullException::.ctor(string)
-        throw 
-                
-        // length check
-        CheckLength:
         ldarg.0
         ldlen
         conv.i4
