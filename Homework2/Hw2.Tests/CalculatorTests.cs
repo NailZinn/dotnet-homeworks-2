@@ -10,7 +10,7 @@ namespace Hw2Tests
         [InlineData(15, 5, CalculatorOperation.Minus, 10)]
         [InlineData(15, 5, CalculatorOperation.Multiply, 75)]
         [InlineData(15, 5, CalculatorOperation.Divide, 3)]
-        public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
+        public void Calculate_TwoNumbers_ReturnsRightAnswer(int value1, int value2, CalculatorOperation operation, int expectedValue)
         {
             var actual = Calculator.Calculate(value1, operation, value2);
 
@@ -18,13 +18,13 @@ namespace Hw2Tests
         }
         
         [Fact]
-        public void TestInvalidOperation()
+        public void Calculate_WithUndefinedOperation_ThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(0, CalculatorOperation.Undefined, 10));
         }
 
         [Fact]
-        public void TestDividingNonZeroByZero()
+        public void Calculate_DivideZeroByNonZero_ReturnsZero()
         {
             var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
 
@@ -32,7 +32,7 @@ namespace Hw2Tests
         }
 
         [Fact]
-        public void TestDividingZeroByNonZero()
+        public void Calculate_DivideNonZeroByZero_ReturnsPositiveInfinity()
         {
             var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
 
@@ -40,7 +40,7 @@ namespace Hw2Tests
         }
         
         [Fact]
-        public void TestDividingZeroByZero()
+        public void Calculate_DivideZeroByZero_ReturnsNaN()
         {
             var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
 

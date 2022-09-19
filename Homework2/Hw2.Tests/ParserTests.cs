@@ -10,7 +10,7 @@ namespace Hw2Tests
         [InlineData("-", CalculatorOperation.Minus)]
         [InlineData("*", CalculatorOperation.Multiply)]
         [InlineData("/", CalculatorOperation.Divide)]
-        public void TestCorrectOperations(string operation, CalculatorOperation operationExpected)
+        public void ParseCalcArguments_WithCorrectOperation_ReturnsRightAnswer(string operation, CalculatorOperation operationExpected)
         {
             string[] args = { "15", operation, "10" };
             
@@ -25,7 +25,7 @@ namespace Hw2Tests
         [InlineData("f", "+", "3")]
         [InlineData("3", "+", "f")]
         [InlineData("a", "+", "f")]
-        public void TestParserWrongValues(string val1, string operation, string val2)
+        public void ParseCalcArguments_WithWrongValues_ThrowsException(string val1, string operation, string val2)
         {
             string[] args = { val1, operation, val2 };
 
@@ -33,7 +33,7 @@ namespace Hw2Tests
         }
         
         [Fact]
-        public void TestParserWrongOperation()
+        public void ParseCalcArguments_WithWrongOperation_ThrowsException()
         {
             var args = new[] { "3", ".", "4" };
             
@@ -41,7 +41,7 @@ namespace Hw2Tests
         }
 
         [Fact]
-        public void TestParserWrongLength()
+        public void ParseCalcArguments_WithWrongArgumentsLength_ThrowsException()
         {
             var args = new[] { "3", ".", "4", "5" };
             
