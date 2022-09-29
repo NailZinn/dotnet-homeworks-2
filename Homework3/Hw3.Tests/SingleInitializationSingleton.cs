@@ -16,20 +16,32 @@ public class SingleInitializationSingleton
     private SingleInitializationSingleton(int delay = DefaultDelay)
     {
         Delay = delay;
-        // imitation of complex initialization logic
         Thread.Sleep(delay);
     }
 
     internal static void Reset()
     {
-        throw new NotImplementedException();
+        _isInitialized = false;
+        instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
     }
 
     public static void Initialize(int delay)
     {
-        throw new NotImplementedException();
+        if (_isInitialized)
+            throw new InvalidOperationException();
+
+        lock (Locker)
+        {
+            if (_isInitialized)
+                throw new InvalidOperationException();
+
+            _isInitialized = true;
+            instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
+        }
     }
 
-    public static SingleInitializationSingleton Instance => throw new NotImplementedException();
+    private static Lazy<SingleInitializationSingleton> instance =
+        new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
 
+    public static SingleInitializationSingleton Instance => instance.Value;
 }
