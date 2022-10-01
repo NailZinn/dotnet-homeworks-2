@@ -15,6 +15,9 @@ public class SingleInitializationSingleton
 
     private SingleInitializationSingleton(int delay = DefaultDelay)
     {
+        if (delay < 0)
+            throw new ArgumentException("Значение delay должно быть не отрицательным");
+        
         Delay = delay;
         Thread.Sleep(delay);
     }
@@ -43,7 +46,7 @@ public class SingleInitializationSingleton
         }
     }
 
-    private static Lazy<SingleInitializationSingleton> instance =
+    private static volatile Lazy<SingleInitializationSingleton> instance =
         new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
 
     public static SingleInitializationSingleton Instance => instance.Value;
