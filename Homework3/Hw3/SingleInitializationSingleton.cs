@@ -13,7 +13,7 @@ public class SingleInitializationSingleton
     
     public int Delay { get; }
 
-    private SingleInitializationSingleton(int delay = DefaultDelay)
+    private SingleInitializationSingleton(int delay)
     {
         if (delay < 0)
             throw new ArgumentException("Значение delay должно быть не отрицательным");
@@ -27,7 +27,7 @@ public class SingleInitializationSingleton
         lock (Locker)
         {
             _isInitialized = false;
-            instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
+            instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay));
         }
     }
 
@@ -47,7 +47,7 @@ public class SingleInitializationSingleton
     }
 
     private static volatile Lazy<SingleInitializationSingleton> instance =
-        new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
+        new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay));
 
     public static SingleInitializationSingleton Instance => instance.Value;
 }
