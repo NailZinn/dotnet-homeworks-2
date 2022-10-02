@@ -58,23 +58,21 @@ public class SingleInitializationSingletonTests
         Assert.Throws<ArgumentException>(() => SingleInitializationSingleton.Instance);
     }
 
-    [Fact (Skip = "Unreachable exception due to non multithreading environment")]
+    [Fact]
     public void DoubleInitializationAttempt_With5000Tasks_ThrowsException()
     {
-        var tasks = Enumerable
-            .Range(1, 5000)
-            .Select(_ => new Task(() =>
+        var tasks = new Task[5000];
+        for (int i = 0; i < 5000; i++)
+        {
+            tasks[i] = new Task(() =>
             {
                 SingleInitializationSingleton.Reset();
-                SingleInitializationSingleton.Initialize(1);
-            }))
-            .ToArray();
-        
-        Array.ForEach(tasks, task => task.Start());
+                SingleInitializationSingleton.Initialize(2);
+                SingleInitializationSingleton.Initialize(2);
+            });
+            tasks[i].Start();
+        }
 
-        Assert.Throws<AggregateException>(() =>
-        {
-            Task.WaitAll(tasks);
-        });
+        Assert.Throws<AggregateException>(() => Task.WaitAll(tasks));
     }
 }
