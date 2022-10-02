@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Hw3.Tests;
+namespace Hw3;
 
 public class SingleInitializationSingleton
 {
