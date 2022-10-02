@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Hw3.Tests;
@@ -40,10 +42,39 @@ public class SingleInitializationSingletonTests
     [Fact]
     public void DoubleInitializationAttemptThrowsException()
     {
+        SingleInitializationSingleton.Reset();
         SingleInitializationSingleton.Initialize(2);
         Assert.Throws<InvalidOperationException>(() =>
         {
             SingleInitializationSingleton.Initialize(3);
+        });
+    }
+
+    [Fact]
+    public void SingletonInstance_WithNegativeDelay_ThrowsException()
+    {
+        SingleInitializationSingleton.Reset();
+        SingleInitializationSingleton.Initialize(-1);
+        Assert.Throws<ArgumentException>(() => SingleInitializationSingleton.Instance);
+    }
+
+    [Fact]
+    public void DoubleInitializationAttempt_With1000Threads_ThrowsException()
+    {
+        var tasks = Enumerable
+            .Range(1, 5000)
+            .Select(_ => new Task(() =>
+            {
+                SingleInitializationSingleton.Reset();
+                SingleInitializationSingleton.Initialize(1);
+            }))
+            .ToArray();
+        
+        Array.ForEach(tasks, task => task.Start());
+
+        Assert.Throws<AggregateException>(() =>
+        {
+            Task.WaitAll(tasks);
         });
     }
 }

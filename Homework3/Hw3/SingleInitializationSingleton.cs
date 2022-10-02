@@ -26,8 +26,8 @@ public class SingleInitializationSingleton
     {
         lock (Locker)
         {
-            _isInitialized = false;
             instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay));
+            _isInitialized = false;
         }
     }
 
@@ -40,13 +40,13 @@ public class SingleInitializationSingleton
         {
             if (_isInitialized)
                 throw new InvalidOperationException();
-
-            _isInitialized = true;
+            
             instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
+            _isInitialized = true;
         }
     }
 
-    private static volatile Lazy<SingleInitializationSingleton> instance =
+    private static Lazy<SingleInitializationSingleton> instance =
         new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay));
 
     public static SingleInitializationSingleton Instance => instance.Value;
