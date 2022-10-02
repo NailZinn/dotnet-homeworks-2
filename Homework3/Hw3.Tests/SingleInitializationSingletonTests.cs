@@ -59,10 +59,10 @@ public class SingleInitializationSingletonTests
     }
 
     [Fact]
-    public void DoubleInitializationAttempt_With5000Tasks_ThrowsException()
+    public void DoubleInitializationAttempt_With10000Tasks_ThrowsException()
     {
-        var tasks = new Task[5000];
-        for (int i = 0; i < 5000; i++)
+        var tasks = new Task[10000];
+        for (int i = 0; i < 10000; i++)
         {
             tasks[i] = new Task(() =>
             {
