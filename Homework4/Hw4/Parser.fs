@@ -11,7 +11,7 @@ type CalcOptions = {
 
 let assertLength (args : string[]) =
     match args.Length with
-    | 3 -> printf "ok"
+    | 3 -> None
     | _ -> ArgumentException() |> raise
 
 let parseOperation (arg : string) =
@@ -23,7 +23,7 @@ let parseOperation (arg : string) =
     | _ -> ArgumentException("Could not convert given value to an operation") |> raise
     
 let parseCalcArguments(args : string[]) =
-    assertLength args
+    assertLength args |> ignore
     try
         let val1 = Double.Parse(args[0])
         let val2 = Double.Parse(args[2])
