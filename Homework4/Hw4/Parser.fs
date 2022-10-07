@@ -20,7 +20,7 @@ let parseOperation (arg : string) =
     | "-" -> CalculatorOperation.Minus
     | "*" -> CalculatorOperation.Multiply
     | "/" -> CalculatorOperation.Divide
-    | _ -> ArgumentException("Could not convert given value to an operation") |> raise
+    | _ -> InvalidOperationException("Could not convert given value to an operation") |> raise
     
 let parseCalcArguments(args : string[]) =
     assertLength args |> ignore
