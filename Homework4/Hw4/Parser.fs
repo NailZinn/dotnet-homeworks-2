@@ -24,11 +24,12 @@ let parseOperation (arg : string) =
     
 let parseCalcArguments(args : string[]) =
     assertLength args |> ignore
-    try
-        let val1 = Double.Parse(args[0])
-        let val2 = Double.Parse(args[2])
-        let operation = parseOperation args[1]
+    
+    let couldParseVal1, val1 = Double.TryParse args[0]
+    let couldParseVal2, val2 = Double.TryParse args[2]
+    let operation = parseOperation args[1]
+    
+    if (couldParseVal1 |> not || couldParseVal2 |> not) then
+        ArgumentException("Could not convert given value to a number") |> raise
         
-        { arg1 = val1; arg2 = val2; operation = operation }
-    with
-        | :? FormatException -> ArgumentException("Could not convert given value to a number") |> raise
+    { arg1 = val1; arg2 = val2; operation = operation }
