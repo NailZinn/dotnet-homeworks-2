@@ -20,4 +20,5 @@ let main (args : string[]) =
         printfn $"{Calculator.calculate options.arg1 options.operation options.arg2}"
     with
         | :? ArgumentException as ex -> printfn $"{ex.Message}"
+        | :? InvalidOperationException as ex -> printfn $"{ex.Message}"
     0
