@@ -3,6 +3,7 @@
 open System
 open Hw5.Calculator
 open Hw5.MaybeBuilder
+open System.Globalization
 
 let (|CalculatorOperation|_|) arg =
     match arg with
@@ -12,8 +13,8 @@ let (|CalculatorOperation|_|) arg =
     | Divide -> Some CalculatorOperation.Divide
     | _ -> None
     
-let (|Double|_|) arg =
-    match Double.TryParse(arg: string) with
+let (|Double|_|) (arg: string)=
+    match Double.TryParse(arg, NumberStyles.AllowDecimalPoint, Globalization.CultureInfo.InvariantCulture) with
     | true, double -> Some double
     | _ -> None
 
@@ -33,8 +34,8 @@ let parseArgs (args: string[]): Result<('a * string * 'b), Message> =
     | Double val1 ->
         match args[2] with
         | Double val2 -> Ok (val1, args[1], val2)
-        | _ -> Error Message.WrongArgFormat
-    | _ -> Error Message.WrongArgFormat
+        | _ -> Error Message.WrongArgFormatForValue2
+    | _ -> Error Message.WrongArgFormatForValue1
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =

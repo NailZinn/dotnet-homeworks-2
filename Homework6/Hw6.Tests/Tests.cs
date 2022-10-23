@@ -91,7 +91,7 @@ namespace Hw6Tests
             Assert.True(response.StatusCode == statusCode);
             if (statusCode == HttpStatusCode.OK && !isDividingByZero)
                 Assert.True(Math.Abs(decimal.Parse(expectedValueOrError, CultureInfo.InvariantCulture) -
-                                     decimal.Parse(result, CultureInfo.CurrentCulture)) < Epsilon);
+                                     decimal.Parse(result, CultureInfo.InvariantCulture)) < Epsilon);
             else
                 Assert.Contains(expectedValueOrError, result);
         }

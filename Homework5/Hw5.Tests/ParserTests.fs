@@ -80,10 +80,10 @@ let ``values parsed correctly`` (value1, operation, value2, expectedValue) =
     | Error _ -> Assert.False |> ignore
         
 [<Theory>]
-[<InlineData("f", "+", "3")>]
-[<InlineData("3", "+", "f")>]
-[<InlineData("a", "+", "f")>]
-let ``Incorrect values return Error`` (value1, operation, value2) =
+[<InlineData("f", "+", "3", Message.WrongArgFormatForValue1)>]
+[<InlineData("3", "+", "f", Message.WrongArgFormatForValue2)>]
+[<InlineData("a", "+", "f", Message.WrongArgFormatForValue1)>]
+let ``Incorrect values return Error`` (value1, operation, value2, message) =
     //arrange
     let args = [|value1;operation;value2|]
     
@@ -93,7 +93,7 @@ let ``Incorrect values return Error`` (value1, operation, value2) =
     //assert
     match result with
     | Ok _ -> Assert.False |> ignore
-    | Error resultError -> Assert.Equal(resultError, Message.WrongArgFormat)
+    | Error resultError -> Assert.Equal(resultError, message)
     
 [<Fact>]
 let ``Incorrect operations return Error`` () =

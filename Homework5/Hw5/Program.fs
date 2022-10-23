@@ -13,15 +13,12 @@ let getArguments (resource : string[]) : string[] =
         args
     | _ -> resource
     
-[<ExcludeFromCodeCoverage>]
-let calculate (val1, operation, val2) =
-    calculate val1 operation val2
-    
 let showMessage message =
     match message with
     | Message.SuccessfulExecution -> "Вычисление успешно выполнено"
     | Message.WrongArgLength -> "Ожидаемая длина входного выражения ожидалась 3: 2 числа и 1 операция"
-    | Message.WrongArgFormat -> "Не удалось сконвертировать входные данные в числа"
+    | Message.WrongArgFormatForValue1 -> "Не удалось сконвертировать первое значение в число"
+    | Message.WrongArgFormatForValue2 -> "Не удалось сконвертировать второе значение в число"
     | Message.WrongArgFormatOperation -> "Не удалось распознать разрешённую операцию. Среди разрешённых: '+', '-', '*', '/'"
     | Message.DivideByZero -> "Деление на 0!"
     
@@ -30,6 +27,6 @@ let showMessage message =
 let main (args: string[]) =
     let data = getArguments args
     match parseCalcArguments data with
-    | Ok parsedData -> printfn $"{calculate parsedData}"
-    | Error message -> printfn $"{showMessage message}"
+    | Ok parsedData -> printfn $"{parsedData |||> calculate}"
+    | Error message -> printfn $"{message |> showMessage}"
     0
