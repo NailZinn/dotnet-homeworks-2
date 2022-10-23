@@ -1,6 +1,5 @@
 ﻿open System
 open System.Net.Http
-open System.Threading.Tasks
 open System.Diagnostics.CodeAnalysis
 
 [<ExcludeFromCodeCoverage>]
@@ -19,23 +18,13 @@ let checkInput (input : string) =
     | 3 ->
         let operation = query[1] |> convertOperation
         Ok (query, operation)
-    | _ -> Error "wrong length found"
-
-[<ExcludeFromCodeCoverage>]
-let getQuery (input : Result<(string[] * string), string>) =
-    match input with
-    | Ok parsed -> parsed
-
-[<ExcludeFromCodeCoverage>]
-let getErrorMessage (input : Result<(string[] * string), string>) =
-    match input with
-    | Error message -> message
+    | _ -> Error $"wrong length found. Expected 3 (2 values and 1 operation) but was {query.Length}"
 
 [<ExcludeFromCodeCoverage>]
 let getResult (client : HttpClient) (uri : Uri) =
-    Task.Delay(1000) |> ignore
     async {
         try
+            do! Async.Sleep 2000
             let! response = client.GetStringAsync(uri) |> Async.AwaitTask
             return response
         with
@@ -45,16 +34,15 @@ let getResult (client : HttpClient) (uri : Uri) =
 [<ExcludeFromCodeCoverage>]
 [<EntryPoint>]
 let main _ =
-    let client = new HttpClient()
+    use client = new HttpClient()
     while true do
         let input = Console.ReadLine() |> checkInput
-        if input = Error "wrong length found" then
-            printfn $"{input |> getErrorMessage}"
-        else
-            let parsedData = input |> getQuery
+        match input with
+        | Ok parsedData ->
             let query = parsedData |> fst
             let operation = parsedData |> snd
             let uri = Uri($"https://localhost:51638/calculate?value1={query[0]}&operation={operation}&value2={query[2]}")
             let res = getResult client uri
             printfn $"{res |> Async.RunSynchronously}"
+        | Error message -> printfn $"{message}"
     0
