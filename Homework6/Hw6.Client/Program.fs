@@ -1,5 +1,5 @@
 ﻿open System
-open System.Net
+open System.Net.Http
 open System.Threading.Tasks
 open System.Diagnostics.CodeAnalysis
 
@@ -19,7 +19,7 @@ let checkInput (input : string) =
     | 3 ->
         let operation = query[1] |> convertOperation
         Ok (query, operation)
-    | _ -> Error $"wrong length found"
+    | _ -> Error "wrong length found"
 
 [<ExcludeFromCodeCoverage>]
 let getQuery (input : Result<(string[] * string), string>) =
@@ -32,19 +32,20 @@ let getErrorMessage (input : Result<(string[] * string), string>) =
     | Error message -> message
 
 [<ExcludeFromCodeCoverage>]
-let getResult (client : WebClient) uri =
+let getResult (client : HttpClient) (uri : Uri) =
     Task.Delay(1000) |> ignore
     async {
         try
-            return! client.AsyncDownloadString(uri)
+            let! response = client.GetStringAsync(uri) |> Async.AwaitTask
+            return response
         with
-            :? WebException -> return "could not compute the expression. Try again"
+            :? AggregateException -> return "could not compute the expression. Try again"
     }
 
 [<ExcludeFromCodeCoverage>]
 [<EntryPoint>]
 let main _ =
-    let client = new WebClient()
+    let client = new HttpClient()
     while true do
         let input = Console.ReadLine() |> checkInput
         if input = Error "wrong length found" then
@@ -53,7 +54,7 @@ let main _ =
             let parsedData = input |> getQuery
             let query = parsedData |> fst
             let operation = parsedData |> snd
-            let uri = new Uri($"https://localhost:51638/calculate?value1={query[0]}&operation={operation}&value2={query[2]}")
+            let uri = Uri($"https://localhost:51638/calculate?value1={query[0]}&operation={operation}&value2={query[2]}")
             let res = getResult client uri
             printfn $"{res |> Async.RunSynchronously}"
     0
