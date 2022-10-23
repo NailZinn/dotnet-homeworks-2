@@ -2,6 +2,7 @@
 open System.Net
 open System.Net.Http
 open System.Diagnostics.CodeAnalysis
+open Microsoft.FSharp.Core
 
 [<ExcludeFromCodeCoverage>]
 let convertOperation input = 
@@ -26,7 +27,11 @@ let getResult (client : HttpClient) (uri : Uri) =
     async {
         do! Async.Sleep 2000
         let! response = client.GetAsync(uri) |> Async.AwaitTask
-        return! response.Content.ReadAsStringAsync() |> Async.AwaitTask
+        let! result = response.Content.ReadAsStringAsync() |> Async.AwaitTask
+        if response.StatusCode = HttpStatusCode.BadRequest then
+            return $"Ошибка: {response.StatusCode |> int}. {result}"
+        else
+            return result
     }
 
 [<ExcludeFromCodeCoverage>]
