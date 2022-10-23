@@ -1,4 +1,5 @@
 ﻿open System
+open System.Net
 open System.Net.Http
 open System.Diagnostics.CodeAnalysis
 
@@ -23,12 +24,13 @@ let checkInput (input : string) =
 [<ExcludeFromCodeCoverage>]
 let getResult (client : HttpClient) (uri : Uri) =
     async {
-        try
-            do! Async.Sleep 2000
-            let! response = client.GetStringAsync(uri) |> Async.AwaitTask
-            return response
-        with
-            :? AggregateException -> return "could not compute the expression. Try again"
+        do! Async.Sleep 2000
+        let! response = client.GetAsync(uri) |> Async.AwaitTask
+        let! result =
+            match response.StatusCode with
+            | HttpStatusCode.OK -> response.Content.ReadAsStringAsync() |> Async.AwaitTask
+            | HttpStatusCode.BadRequest -> response.Content.ReadAsStringAsync() |> Async.AwaitTask
+        return result
     }
 
 [<ExcludeFromCodeCoverage>]
