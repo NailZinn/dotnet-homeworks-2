@@ -26,11 +26,7 @@ let getResult (client : HttpClient) (uri : Uri) =
     async {
         do! Async.Sleep 2000
         let! response = client.GetAsync(uri) |> Async.AwaitTask
-        let! result =
-            match response.StatusCode with
-            | HttpStatusCode.OK -> response.Content.ReadAsStringAsync() |> Async.AwaitTask
-            | HttpStatusCode.BadRequest -> response.Content.ReadAsStringAsync() |> Async.AwaitTask
-        return result
+        return! response.Content.ReadAsStringAsync() |> Async.AwaitTask
     }
 
 [<ExcludeFromCodeCoverage>]
