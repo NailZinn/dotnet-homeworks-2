@@ -1,5 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ACFCEFF7-8C3B-4D05-8080-DD19A6E07873}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -7,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ACFCEFF7-8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{82BA388F-4AE2-43A2-965A-AC2092BF26F3}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\workflows\test-reporter.yml = .github\workflows\test-reporter.yml
-		.github\workflows\Plagiarism_detector.yml = .github\workflows\Plagiarism_detector.yml
 		.github\coverlet.runsettings = .github\coverlet.runsettings
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\Plagiarism_detector.yml = .github\workflows\Plagiarism_detector.yml
+		.github\workflows\test-reporter.yml = .github\workflows\test-reporter.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw7", "Homework7\Hw7\Hw7.csproj", "{72792ADC-14C5-4D47-8BA8-69E67294606A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hw7", "Homework7\Hw7\Hw7.csproj", "{72792ADC-14C5-4D47-8BA8-69E67294606A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw7.Tests", "Homework7\Hw7.Tests\Hw7.Tests.csproj", "{EFFCAE7C-FC6C-4CAD-9A8B-914D7D52F2ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hw7.Tests", "Homework7\Hw7.Tests\Hw7.Tests.csproj", "{EFFCAE7C-FC6C-4CAD-9A8B-914D7D52F2ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework7", "Homework7", "{6FDC39E7-9E3C-4350-9902-9140B9187ED9}"
 	ProjectSection(SolutionItems) = preProject
@@ -37,8 +39,14 @@ Global
 		{EFFCAE7C-FC6C-4CAD-9A8B-914D7D52F2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFFCAE7C-FC6C-4CAD-9A8B-914D7D52F2ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{72792ADC-14C5-4D47-8BA8-69E67294606A} = {6FDC39E7-9E3C-4350-9902-9140B9187ED9}
 		{EFFCAE7C-FC6C-4CAD-9A8B-914D7D52F2ED} = {6FDC39E7-9E3C-4350-9902-9140B9187ED9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C97B820C-CA25-45EF-AF52-5A85B3EC4DBB}
 	EndGlobalSection
 EndGlobal
