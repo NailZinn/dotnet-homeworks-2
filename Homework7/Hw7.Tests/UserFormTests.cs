@@ -1,8 +1,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Hw7;
+using Hw7.Enums;
 using Hw7.ErrorMessages;
-using Hw7.Models;
 using Hw7.Models.ForTests;
 using Hw7Tests.Shared;
 using Microsoft.AspNetCore.Mvc.Testing;

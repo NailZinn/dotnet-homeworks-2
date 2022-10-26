@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hw7Tests.Shared;
 
+[ExcludeFromCodeCoverage]
 public static class StringExtensions
 {
     public static string RemoveNewLine(this string src)

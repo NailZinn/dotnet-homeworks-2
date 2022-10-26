@@ -1,10 +1,7 @@
-using Hw7.Models;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Hw7.MyHtmlServices;
@@ -16,19 +13,18 @@ public static class HtmlHelperExtensions
         var model = helper.ViewData.Model;
         var properties = helper.ViewData.ModelMetadata.ModelType.GetProperties();
 
-        return model == null ? ProcessGetRequest(properties) : ProcessPostRequest(properties, model);
+        return model is null ? ProcessGetRequest(properties) : ProcessPostRequest(properties, model);
     }
 
     private static IHtmlContent ProcessGetRequest(PropertyInfo[] properties)
     {
         var builder = new HtmlContentBuilder();
-        var displayAttrs = properties.Select(prop => prop.GetCustomAttribute<DisplayAttribute>());
-        var zip = properties.Zip(displayAttrs);
 
-        foreach (var (property, displayAttribute) in zip)
+        foreach (var property in properties)
         {
             var name = property.Name;
             var type = property.PropertyType;
+            var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
             var labelContent = GetLabelContent(property.Name, displayAttribute);
 
             if (type.IsEnum)
@@ -56,14 +52,13 @@ public static class HtmlHelperExtensions
     private static IHtmlContent ProcessPostRequest(PropertyInfo[] properties, object? model)
     {
         var builder = new HtmlContentBuilder();
-        var validationAttrs = properties.Select(prop => prop.GetCustomAttributes<ValidationAttribute>());
-        var zip = properties.Zip(validationAttrs);
 
-        foreach (var (property, validationAttributes) in zip)
+        foreach (var property in properties)
         {
+            var validationAttrs = property.GetCustomAttributes<ValidationAttribute>();
             var propertyVal = property.GetValue(model);
 
-            foreach (var validator in validationAttributes)
+            foreach (var validator in validationAttrs)
             {
                 if (!validator.IsValid(propertyVal))
                 {
@@ -81,23 +76,13 @@ public static class HtmlHelperExtensions
         => $"<label for=\"{forAttribute}\">{content}</label><br>";
 
     private static string GetSelectTag(string[] data)
-    {
-        return
-            "<select>" +
-                string.Join("", GetOptionTags(data)) +
-            "</select>";
-    }
-
+        => $"<select>{string.Join("", GetOptionTags(data))}</select>";
+    
     private static string[] GetOptionTags(string[] data)
-    {
-        return Enumerable
-            .Range(0, data.Length)
-            .Select(i => $"<option value=\"{data[i]}\">{data[i]}</option>")
-            .ToArray();
-    }
+        => data.Select(value => $"<option value=\"{value}\">{value}</option>").ToArray();
 
     private static string GetLabelContent(string propertyName, DisplayAttribute? attribute)
-        => attribute == null ? SplitStringByUpperCase(propertyName) : attribute.Name;
+        => attribute is null ? SplitStringByUpperCase(propertyName) : attribute.Name;
 
     private static string SplitStringByUpperCase(string entry)
         => string.Join(' ', Regex.Split(entry, @"(?<!^)(?=[A-Z])"));

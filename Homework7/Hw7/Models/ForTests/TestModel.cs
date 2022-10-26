@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using Hw7.Enums;
 using Hw7.ErrorMessages;
 
 namespace Hw7.Models.ForTests;
@@ -26,6 +28,7 @@ public class TestModel : BaseModel
     
     [Display(Name = "Пол")]
     public override Sex Sex { get; set; }
-    
+
+    [ExcludeFromCodeCoverage]
     public string A { get; set; } = null!;
 }

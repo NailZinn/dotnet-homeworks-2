@@ -1,3 +1,5 @@
+using Hw7.Enums;
+
 namespace Hw7.Models.ForTests;
 
 public class BaseModel

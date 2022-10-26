@@ -1,14 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Hw7.Enums;
 using Hw7.ErrorMessages;
 using Hw7.Models.ForTests;
 
 namespace Hw7.Models;
-
-public enum Sex : byte
-{
-    Male,
-    Female
-};
 
 public class UserProfile : BaseModel
 {
