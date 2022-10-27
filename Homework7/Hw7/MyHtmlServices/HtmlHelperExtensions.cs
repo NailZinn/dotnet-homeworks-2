@@ -19,33 +19,9 @@ public static class HtmlHelperExtensions
     private static IHtmlContent ProcessGetRequest(PropertyInfo[] properties)
     {
         var builder = new HtmlContentBuilder();
-
-        foreach (var property in properties)
-        {
-            var name = property.Name;
-            var type = property.PropertyType;
-            var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
-            var labelContent = GetLabelContent(property.Name, displayAttribute);
-
-            if (type.IsEnum)
-            {
-                var enumNames = type.GetEnumNames();
-                var selectTag = GetSelectTag(enumNames);
-
-                builder.AppendHtmlLine(
-                    $"<div>{GetLabelTag($"{name}", labelContent)}" +
-                    $"{selectTag}<br></div>");
-            }
-            else
-            {
-                var contentType = type == typeof(string) ? "text" : "number";
-
-                builder.AppendHtmlLine(
-                    $"<div>{GetLabelTag($"{name}", labelContent)}" +
-                    $"<input id=\"{name}\" type=\"{contentType}\"><br></div>");
-            }
-        }
-
+        
+        Array.ForEach(properties, property => builder.AppendHtmlLine($"<div>{GetFormItem(property)}<br></div>"));
+        
         return builder;
     }
 
@@ -58,22 +34,49 @@ public static class HtmlHelperExtensions
             var validationAttrs = property.GetCustomAttributes<ValidationAttribute>();
             var propertyVal = property.GetValue(model);
 
+            builder.AppendHtmlLine($"<div>{GetFormItem(property)}");
+            
             foreach (var validator in validationAttrs)
             {
                 if (!validator.IsValid(propertyVal))
                 {
                     builder.AppendHtmlLine(
-                        $"<div>{GetLabelTag($"{property.Name}", string.Empty)}" +
-                        $"<span>{validator.ErrorMessage}</span><br></div>");
+                        $"{GetLabelTag($"{property.Name}", string.Empty)}" +
+                        $"<span>{validator.ErrorMessage}</span>");
                 }
             }
+            
+            builder.AppendHtmlLine("<br></div>");
         }
 
         return builder;
     }
 
+    private static string GetFormItem(PropertyInfo property)
+    {
+        var name = property.Name;
+        var type = property.PropertyType;
+        var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
+        var labelContent = GetLabelContent(property.Name, displayAttribute);
+
+        if (type.IsEnum)
+        {
+            var enumNames = type.GetEnumNames();
+            var selectTag = GetSelectTag(enumNames);
+            
+            return $"{GetLabelTag($"{name}", labelContent)}<br>{selectTag}<br>";
+        }
+        else
+        {
+            var contentType = type == typeof(string) ? "text" : "number";
+
+            return $"{GetLabelTag($"{name}", labelContent)}<br>" +
+                   $"<input id=\"{name}\" name=\"{name}\" type=\"{contentType}\">";
+        }
+    }
+
     private static string GetLabelTag(string forAttribute, string content)
-        => $"<label for=\"{forAttribute}\">{content}</label><br>";
+        => $"<label for=\"{forAttribute}\">{content}</label>";
 
     private static string GetSelectTag(string[] data)
         => $"<select>{string.Join("", GetOptionTags(data))}</select>";
