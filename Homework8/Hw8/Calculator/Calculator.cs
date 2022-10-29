@@ -9,7 +9,8 @@
                 Operation.Plus => Plus(value1, value2),
                 Operation.Minus => Minus(value1, value2),
                 Operation.Multiply => Multiply(value1, value2),
-                Operation.Divide => Divide(value1, value2)
+                Operation.Divide => Divide(value1, value2),
+                _ => throw new InvalidOperationException(Messages.InvalidOperationMessage)
             };
         }
 
