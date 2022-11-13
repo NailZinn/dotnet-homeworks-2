@@ -17,7 +17,6 @@ namespace Hw10.Expressions
                     if (before.Any())
                     {
                         await Task.WhenAll(before.Select(b => lazy[b].Value));
-                        await Task.Yield();
 
                         await Task.Delay(1000);
                     }
