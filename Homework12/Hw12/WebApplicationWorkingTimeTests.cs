@@ -16,6 +16,12 @@ public class WebApplicationWorkingTimeTests
 		_fSharpClient =  new TestApplicationFactoryFSharp().CreateClient();
 	}
 	
+	~WebApplicationWorkingTimeTests()
+	{
+		_cSharpClient.Dispose();
+		_fSharpClient.Dispose();
+	}
+	
 	[Benchmark]
 	public async Task PlusOperationTimeTestCSharp()
 	{
