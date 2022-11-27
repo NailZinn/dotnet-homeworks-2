@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
+using StackExchange.Profiling;
 
 namespace Hw8;
 
@@ -12,6 +13,7 @@ public class Program
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<ICalculator, Calculator.Calculator>();
+        builder.Services.AddMiniProfiler();
 
         var app = builder.Build();
 
@@ -24,6 +26,8 @@ public class Program
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+        app.UseMiniProfiler();
+        
         app.UseRouting();
         app.UseAuthorization();
 
