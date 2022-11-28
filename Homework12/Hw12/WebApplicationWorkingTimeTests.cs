@@ -19,7 +19,6 @@ public class WebApplicationWorkingTimeTests
 	[GlobalCleanup]
 	public void Cleanup()
 	{
-		
 		_cSharpClient.Dispose();
 		_fSharpClient.Dispose();
 	}
