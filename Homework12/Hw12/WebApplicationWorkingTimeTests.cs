@@ -16,8 +16,10 @@ public class WebApplicationWorkingTimeTests
 		_fSharpClient =  new TestApplicationFactoryFSharp().CreateClient();
 	}
 	
-	~WebApplicationWorkingTimeTests()
+	[GlobalCleanup]
+	public void Cleanup()
 	{
+		
 		_cSharpClient.Dispose();
 		_fSharpClient.Dispose();
 	}
