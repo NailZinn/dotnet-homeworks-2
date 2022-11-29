@@ -116,12 +116,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw11", "Homework11\Hw11\Hw11.csproj", "{D3503703-6227-4A49-A937-F20DB5BAD636}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework12", "Homework12", "{F76958C8-AD2F-4006-80AF-D7A466020AD3}"
-	ProjectSection(SolutionItems) = preProject
-		Homework12\README.md = Homework12\README.md
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw12", "Homework12\Hw12\Hw12.csproj", "{93E929A3-EF7A-481E-94C2-47AEB416A7A9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework13", "Homework13", "{C7D8B4A4-35B9-4D97-A54F-8DD80BC30E38}"
 	ProjectSection(SolutionItems) = preProject
 		Homework13\README.md = Homework13\README.md
