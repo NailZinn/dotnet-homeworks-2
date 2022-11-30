@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Hw12.WebApplicationWorkingTimeTests-20221127-125445</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22000.1098/21H2)
+AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx, 1 CPU, 8 logical and 4 physical cores
+.NET SDK=7.0.100
+  [Host]     : .NET 6.0.11 (6.0.1122.52304), X64 RyuJIT AVX2
+  DefaultJob : .NET 6.0.11 (6.0.1122.52304), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                         Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Max</th><th>Min</th>
+</tr>
+</thead><tbody><tr><td>PlusOperationTimeTestCSharp</td><td>254.95 &mu;s</td><td>5.067 &mu;s</td><td>13.080 &mu;s</td><td>254.11 &mu;s</td><td>288.63 &mu;s</td><td>233.82 &mu;s</td>
+</tr><tr><td>SubtractionOperationTimeTestCSharp</td><td>278.79 &mu;s</td><td>11.695 &mu;s</td><td>33.366 &mu;s</td><td>266.67 &mu;s</td><td>369.94 &mu;s</td><td>238.90 &mu;s</td>
+</tr><tr><td>MultiplicationOperationTimeTestCSharp</td><td>257.64 &mu;s</td><td>7.827 &mu;s</td><td>22.456 &mu;s</td><td>255.99 &mu;s</td><td>320.15 &mu;s</td><td>210.26 &mu;s</td>
+</tr><tr><td>DivisionOperationTimeTestCSharp</td><td>267.83 &mu;s</td><td>12.069 &mu;s</td><td>33.842 &mu;s</td><td>261.58 &mu;s</td><td>366.76 &mu;s</td><td>216.98 &mu;s</td>
+</tr><tr><td>PlusOperationTimeTestFSharp</td><td>74.75 &mu;s</td><td>3.569 &mu;s</td><td>10.182 &mu;s</td><td>72.73 &mu;s</td><td>105.38 &mu;s</td><td>61.69 &mu;s</td>
+</tr><tr><td>SubtractionOperationTimeTestFSharp</td><td>69.90 &mu;s</td><td>2.516 &mu;s</td><td>7.260 &mu;s</td><td>69.69 &mu;s</td><td>87.71 &mu;s</td><td>56.96 &mu;s</td>
+</tr><tr><td>MultiplicationOperationTimeTestFSharp</td><td>59.20 &mu;s</td><td>1.125 &mu;s</td><td>1.204 &mu;s</td><td>59.30 &mu;s</td><td>61.43 &mu;s</td><td>57.35 &mu;s</td>
+</tr><tr><td>DivisionOperationTimeTestFSharp</td><td>67.06 &mu;s</td><td>1.928 &mu;s</td><td>5.562 &mu;s</td><td>66.31 &mu;s</td><td>81.24 &mu;s</td><td>59.31 &mu;s</td>
+</tr></tbody></table>
+</body>
+</html>
